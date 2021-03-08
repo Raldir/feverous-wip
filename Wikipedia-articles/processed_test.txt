@@ -1,0 +1,74 @@
+<span style="visibility: hidden;font-size:1px">_table_infobox_0</span>
+{|class="wikitable" style="border: none; width: 25%; background: none; float: right;
+!rowspan="1", colspan="2" |Publius Cornelius Rutilus Cossus<span style="visibility: hidden;font-size:1px">_header_cell_0_0_0</span>
+|-
+!rowspan="1", colspan="2" |[[Roman_dictator|Dictator]] of the [[Roman_Republic|Roman Republic]]<span style="visibility: hidden;font-size:1px">_header_cell_0_1_0</span>
+|-
+!rowspan="1", colspan="1" |In office<span style="visibility: hidden;font-size:1px">_header_cell_0_2_0</span>
+|rowspan="1", colspan="1" |408 BC<span style="visibility: hidden;font-size:1px">_cell_0_2_1</span>
+|-
+!rowspan="1", colspan="1" |[[Magister_equitum|Magister equitum]]<span style="visibility: hidden;font-size:1px">_header_cell_0_3_0</span>
+|rowspan="1", colspan="1" |Gaius Servilius Structus Ahala<span style="visibility: hidden;font-size:1px">_cell_0_3_1</span>
+|-
+!rowspan="1", colspan="2" |[[Tribuni_militum_consulari_potestate|Consular tribune]] of the [[Roman_Republic|Roman Republic]]<span style="visibility: hidden;font-size:1px">_header_cell_0_4_0</span>
+|-
+!rowspan="1", colspan="1" |In office<span style="visibility: hidden;font-size:1px">_header_cell_0_5_0</span>
+|rowspan="1", colspan="1" |406 BC<span style="visibility: hidden;font-size:1px">_cell_0_5_1</span>
+|-
+!rowspan="1", colspan="1" |Colleagues<span style="visibility: hidden;font-size:1px">_header_cell_0_6_0</span>
+|rowspan="1", colspan="1" |Gn. Cornelius Cossus, [[Numerius_Fabius_Ambustus|N. Fabius Ambustus]], L. Valerius Potitus<span style="visibility: hidden;font-size:1px">_cell_0_6_1</span>
+|-
+|}
+Publius Cornelius Rutilus Cossus was a statesman and military commander from the early [[Roman_Republic|Roman Republic]] who served as [[Roman_dictator|Dictator]] in 408 BC. <span style="visibility: hidden;font-size:1px">_sentence_0</span>
+
+== Family <span style="visibility: hidden;font-size:1px">_section_0</span> ==
+
+Cossus belonged to the [[Gens|gens]] [[Cornelia_(gens)|Cornelia]], one of the most important [[Patrician_(ancient_Rome)|patrician]] [[List_of_Roman_gentes|gentes]] of the Republic. <span style="visibility: hidden;font-size:1px">_sentence_1</span>
+
+His father was named Marcus, and his grandfather Lucius, but no magistracy is recorded for them. <span style="visibility: hidden;font-size:1px">_sentence_2</span>
+
+He was however the brother of the more famous [[Aulus_Cornelius_Cossus|Aulus Cornelius Cossus]], one of the only three Romans awarded the [[Spolia_opima|spolia opima]] for having killed the king of [[Veii|Veii]] [[Lars_Tolumnius|Lars Tolumnius]] in single combat. <span style="visibility: hidden;font-size:1px">_sentence_3</span>
+
+Aulus was then [[Consul|consul]] in 428, and [[Tribuni_militum_consulari_potestate|consular tribune]] in 426. <span style="visibility: hidden;font-size:1px">_sentence_4</span>
+
+Publius' had at least two nephews: Gnaeus, consular tribune in 414 and consul in 409, and Publius, consular tribune in 408. <span style="visibility: hidden;font-size:1px">_sentence_5</span>
+
+[[Aulus_Cornelius_Cossus_(dictator)|Aulus]], dictator in 385 and perhaps consul in 413, may have also been his nephew. <span style="visibility: hidden;font-size:1px">_sentence_6</span>
+
+The Cornelii Cossi were thus among the foremost families of the Republic at the end of the 5th century BC. <span style="visibility: hidden;font-size:1px">_sentence_7</span>
+
+== Career <span style="visibility: hidden;font-size:1px">_section_1</span> ==
+
+In 408 BC, a large army comprising mainly [[Volsci|Volsci]] and [[Aequi|Aequi]] assembled at [[Anzio|Antium]]. <span style="visibility: hidden;font-size:1px">_sentence_8</span>
+
+When news of this reached Rome, the Senate, thinking the situation to be a dangerous one, called for the appointment of a dictator to lead the war effort. <span style="visibility: hidden;font-size:1px">_sentence_9</span>
+
+This caused consternation among two of the three [[Tribuni_militum_consulari_potestate|Consular tribunes]], [[Gaius_Julius_Iulus_(consular_tribune_408_BC)|Gaius Julius Iulus]] and Publius Cornelius Cossus, who wanted the command to stay with them. <span style="visibility: hidden;font-size:1px">_sentence_10</span>
+
+The disagreement stoked the existing tensions in Rome during the [[Conflict_of_the_Orders|Conflict of the Orders]], but [[Livy|Livy]]'s narrative is confused on these events. <span style="visibility: hidden;font-size:1px">_sentence_11</span>
+
+The situation was only resolved when the third tribune, Gaius Servilius Structus Ahala, seeing that Iulus and Cornelius could not be persuaded, rose to nominate Rutilus Cossus, Cornelius' uncle. <span style="visibility: hidden;font-size:1px">_sentence_12</span>
+
+Rutilus Cossus then appointed Ahala as his [[Magister_equitum|magister equitum]], which is doubtless the result of a power-sharing negotiation between the consular tribunes. <span style="visibility: hidden;font-size:1px">_sentence_13</span>
+
+Rutilus Cossus and Ahala then led the army out to Antium. <span style="visibility: hidden;font-size:1px">_sentence_14</span>
+
+They defeated the Volscian coalition in one battle before laying waste to the countryside and storming the Volscian fortress at [[Fucine_lake|Lake Fucinus]]. <span style="visibility: hidden;font-size:1px">_sentence_15</span>
+
+As many as 3.000 Volsci were taken prisoner. <span style="visibility: hidden;font-size:1px">_sentence_16</span>
+
+When Cossus returned to the city, he lay down the office of dictator and, according to Livy, did not receive much acclaim for his success. <span style="visibility: hidden;font-size:1px">_sentence_17</span>
+
+Indeed, according to the [[Fasti_Triumphales|Fasti Triumphales]], Rutilus Cossus was not awarded a triumph. <span style="visibility: hidden;font-size:1px">_sentence_18</span>
+
+Rutilus Cossus was elected as one of the consular tribunes for the year 406 BC, alongside Gnaeus Cornelius Cossus, his distant cousin, [[Numerius_Fabius_Ambustus|Numerius Fabius Ambustus]], and Lucius Valerius Potitus. <span style="visibility: hidden;font-size:1px">_sentence_19</span>
+
+The Senate ordered a new war on [[Veii|Veii]], but the consular tribunes opposed it, arguing that the war against the Volsci was not over. <span style="visibility: hidden;font-size:1px">_sentence_20</span>
+
+Rutilus Cossus was given the command against the city of [[Ecetra|Ecetra]], while Fabius took [[Terracina|Anxur]]. <span style="visibility: hidden;font-size:1px">_sentence_21</span>
+
+The consular tribunes then shared the booty with the soldiers, which improved the relations between plebeians and patricians. <span style="visibility: hidden;font-size:1px">_sentence_22</span>
+
+The Senate followed and ordered that citizens must be paid while serving, whereas they had to cover their own expenses before. <span style="visibility: hidden;font-size:1px">_sentence_23</span>
+
+Credits to the contents of this page go to the authors of the corresponding Wikipedia page: en.wikipedia.org/wiki/.

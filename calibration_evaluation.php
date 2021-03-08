@@ -1,0 +1,296 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["user"])){
+echo file_get_contents('login.html');
+echo "<!--";
+}
+
+$db_params = parse_ini_file( dirname(__FILE__).'/annotation-service/db_params.ini', false);
+
+$servername = "localhost";
+$username = $db_params['user'];
+$password = $db_params['password'];
+$dbname = $db_params['database'];
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+
+$current_issue = 0;
+if (isset($_GET["open_issue"])){
+  $current_issue =  $_GET["open_issue"];
+}else{
+  $current_issue = 0;
+}
+
+$claim_id_map = array(11, 17, 19, 22, 26, 39, 44, 48, 56, 62);
+
+
+$sql = "SELECT id, verdict, evidence1, evidence2, evidence3, details1, details2, details3, annotator, claim FROM CalibrationEvidence ev WHERE claim = ? AND annotator=?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("ii", $claim_id_map[$current_issue],$_SESSION["user"]);#, $_SESSION["user"]);
+$stmt->execute();
+$result_anno1 = $stmt->get_result();
+$anno1 = $result_anno1->fetch_assoc();
+
+
+$sql = "SELECT id, verdict, evidence1, evidence2, evidence3, details1, details2, details3, annotator, claim FROM CalibrationGoldEvidence ev WHERE claim = ?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("i", $claim_id_map[$current_issue]);
+$stmt->execute();
+$result_anno2 = $stmt->get_result();
+$anno2 = $result_anno2->fetch_assoc();
+
+$sql = "SELECT claim FROM CalibrationClaims WHERE id = ?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("i", $anno2['claim']);
+$stmt->execute();
+$result_claim = $stmt->get_result();
+$claim = $result_claim->fetch_assoc()['claim'];
+
+$sql = "SELECT annotator_name FROM Annotators WHERE id = ?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("i", $anno1['annotator']);
+$stmt->execute();
+$annotator1_result = $stmt->get_result();
+$annotator1_row = $annotator1_result->fetch_assoc();
+$annotator1 = $annotator1_row['annotator_name'];
+$annotator1_score =  $annotator1_row['calibration_score'];
+
+
+$all_gold_annotations = array_merge(explode(" [SEP] ", $anno2['evidence1']), explode(" [SEP] ", $anno2['evidence2']), explode(" [SEP] ", $anno2['evidence3']));
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+  <script src="js/extensions/jquery.js"></script>
+  <script src="js/extensions/jquery.md5.js"></script>
+  <script src="js/extensions/jquery_ui.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+  <style type="text/css">
+  .container-fluid {
+    width: auto !important;
+    margin-right: 10% !important;
+    margin-left: 10% !important;
+  }
+
+  .list-in {
+  background-color: chartreuse;
+
+  }
+
+  .list-out {
+  background-color:#ff6666 ;
+  }
+
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid p-3">
+    <div class="row">
+      <div class= "text-center float-left">
+        <?php echo "Overall calibration score (verdict accuracy): <b>" . $annotator1_score . "</b>"?>
+      </div>
+      <div class="col-9 m-5">
+        <div class= "text-center m-5 border border-secondary">
+          <?php  echo "<b>" . $claim  . '</b>' . ' (' . $anno2['claim'] . ')'?>
+        </div>
+
+        <div class= " m-5 border border-primary">
+          <?php
+          if ($current_issue == 1){
+            $comment = "If all Thomas Arundell you could find refute the claim, but the entity for which this claim holds true could not be found, annotating 'REFUTED' for this claim is fine as well.";
+          }else if ($current_issue == 8){
+            $comment = "It would not be neccesary to highlight all songs to provide a sufficient set of evidence to support the claim. Optimally, different evidence sets would be used for all relevant songs as these are independent pieces of evidence.  ";
+          }
+            echo $comment;
+          ?>
+        </div>
+        <div class="m-5 border border-secondary">
+        <div class="row">
+          <div class="col-6 pl-2 bg-light">
+            <p class="badge badge-primary float-right">You</p>
+          </div>
+          <div class="col-6 pr-2 bg-light">
+            <p class="badge badge-primary float-right">Gold</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 pl-2 bg-light text-danger">
+            <h4 class="float-left">Verdict: <?php echo $anno1['verdict']; ?></h4>
+          </div>
+          <div class="col-6 pr-2 bg-light text-danger">
+            <h4 class="float-left">Verdict: <?php echo $anno2['verdict']; ?></h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 pl-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 1</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno1['evidence1'] != ""){
+                $evidence1 = explode(" [SEP] ", $anno1['evidence1']);
+                $evidence1_details = explode(" [SEP] ", $anno1['details1']);
+                for($i=0; $i<count($evidence1); $i++) {
+                  $title = str_replace(" ", "_", explode("_", $evidence1[$i])[0]);
+                  if (in_array($evidence1[$i], $all_gold_annotations ))
+                  {
+                    echo "<li class='list-group-item list-in'>";
+                  }else{
+                      echo "<li class='list-group-item list-out'>";
+                  }
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence1[$i] . '</a>' . ' : ';
+                  echo $evidence1_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+          <div class="col-6 pr-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 1</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno2['evidence1'] != ""){
+                $evidence1 = explode(" [SEP] ", $anno2['evidence1']);
+                $evidence1_details = explode(" [SEP] ", $anno2['details1']);
+                for($i=0; $i<count($evidence1); $i++) {
+                  $title = str_replace(" ", "_", explode("_", $evidence1[$i])[0]);
+                  echo "<li class='list-group-item'>";
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence1[$i] . '</a>' . ' : ';
+                  echo $evidence1_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-6 pl-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 2</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno1['evidence2'] != ""){
+                $evidence2 = explode(" [SEP] ", $anno1['evidence2']);
+                $evidence2_details = explode(" [SEP] ", $anno1['details2']);
+                for($i=0; $i<count($evidence1); $i++) {
+                    $title = str_replace(" ", "_", explode("_", $evidence2[$i])[0]);
+                    if (in_array($evidence2[$i], $all_gold_annotations ))
+                    {
+                      echo "<li class='list-group-item list-in'>";
+                    }else{
+                        echo "<li class='list-group-item list-out'>";
+                    }
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence2[$i] . '</a>' . ' : ';
+                  echo $evidence2_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+          <div class="col-6 pr-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 2</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno2['evidence2'] != ""){
+                $evidence2 = explode(" [SEP] ", $anno2['evidence2']);
+                $evidence2_details = explode(" [SEP] ", $anno2['details2']);
+                for($i=0; $i<count($evidence1); $i++) {
+                  echo "<li class='list-group-item'>";
+                  $title = str_replace(" ", "_", explode("_", $evidence2[$i])[0]);
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence2[$i] . '</a>' . ' : ';
+                  echo $evidence2_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-6 pl-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 3</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno1['evidence3'] != ""){
+                $evidence3 = explode(" [SEP] ", $anno1['evidence3']);
+                $evidence3_details = explode(" [SEP] ", $anno1['details3']);
+                for($i=0; $i<count($evidence1); $i++) {
+                  if (in_array($evidence3[$i], $all_gold_annotations ))
+                  {
+                    echo "<li class='list-group-item list-in'>";
+                  }else{
+                      echo "<li class='list-group-item list-out'>";
+                  }
+                  $title = str_replace(" ", "_", explode("_", $evidence3[$i])[0]);
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence3[$i] . '</a>' . ' : ';
+                  echo $evidence3_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+          <div class="col-6 pr-2 bg-light">
+            <h5 class="list-group-item-heading">Evidence Set 3</h5>
+            <ol class="list-group">
+              <?php
+              if ($anno2['evidence3'] != ""){
+                $evidence3 = explode(" [SEP] ", $anno2['evidence3']);
+                $evidence3_details = explode(" [SEP] ", $anno2['details3']);
+                for($i=0; $i<count($evidence3); $i++) {
+                  echo "<li class='list-group-item'>";
+                  $title = str_replace(" ", "_", explode("_", $evidence3[$i])[0]);
+                  echo '<a href=http://mediawiki.feverous.co.uk/index.php?title=' . $title . '>' .$evidence3[$i] . '</a>' . ' : ';
+                  echo $evidence3_details[$i];
+                  echo "</li>";
+                }
+              }
+              ?>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+          </div>
+          <div class="col-2 bg-success bg-light border text-center">
+            <h5 class="list-group-item-heading">Calibration Claims</h5>
+            <?php
+            // foreach ($inbox as &) {
+            for($i=0; $i<10; $i++) {
+              if ($i == $current_issue){
+                echo "<a href='?open_issue=$i'
+                type='button' class='btn btn-outline-secondary btn-sm mb-1 w-75 overflow-hidden active' data-toggle='tooltip' data-placement='right' data-html='true'
+                title='$i'> Claim $i
+                </a>";
+              }else{
+              echo "<a href='?open_issue=$i'
+              type='button' class='btn btn-outline-secondary btn-sm mb-1 w-75 overflow-hidden' data-toggle='tooltip' data-placement='right' data-html='true'
+              title='$i'> Claim $i
+              </a>";
+            }
+            }//da war $sub_email[abbr]
+            ?>
+          </div>
+        </div>
+      </div>
+
+    </body>
+    </html>

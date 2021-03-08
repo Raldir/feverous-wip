@@ -1,0 +1,6 @@
+Disable:
+
+Creation of Account
+Editing of Article
+Login
+Search
